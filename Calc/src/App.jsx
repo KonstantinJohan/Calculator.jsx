@@ -1,32 +1,56 @@
-import { useState } from 'react'
+import { useReducer, useState } from 'react'
 import './App.css'
+
+const ACTIONS = 
+{
+  ADD_DIGIT: 'add-digit',
+  CHOOSE_OPERATION: 'choose-operation',
+  CLEAR: 'clear',
+  DELETE_DIGIT: 'delete-digit',
+  EVALUATE: 'evaluate'
+
+}
+
+function reducer(state, {type, payload})
+{
+  switch(type)
+  {
+    case ACTIONS.ADD_DIGIT:
+      return {
+        ...state,
+        currrentOperand: `${currentOperand || ""}${payload.digit}`
+      } 
+  }
+
+}
 
 function App() 
 {
+  const[{ firstNumber, secNumber, calculation}, discpatch] = useReducer(reducer,{})
   return(
   <div className="calc-grid">
     <div className="output">
-      <div className="firstNumber">1111 + </div>
-        <div className="secNumber">11111</div>
+      <div className="firstNumber">{firstNumber} {calculation}</div>
+        <div className="secNumber">{secNumber}</div>
     </div>
-    <button className="bigDigit">AC</button>
-    <button className="smallDigit">DEL</button>
-    <button className="smallDigit">÷</button>
-    <button className="smallDigit">1</button>
-    <button className="smallDigit">2</button>
-    <button className="smallDigit">3</button>
-    <button className="smallDigit">*</button>
-    <button className="smallDigit">4</button>
-    <button className="smallDigit">5</button>
-    <button className="smallDigit">6</button>
-    <button className="smallDigit">+</button>
-    <button className="smallDigit">7</button>
-    <button className="smallDigit">8</button>
-    <button className="smallDigit">9</button>
-    <button className="smallDigit">-</button>
-    <button className="smallDigit">.</button>
-    <button className="smallDigit">0</button>
-    <button className="bigDigit">=</button>
+    <button className="big-tile">AC</button>
+    <button >DEL</button>
+    <button >÷</button>
+    <button >1</button>
+    <button >2</button>
+    <button >3</button>
+    <button >*</button>
+    <button >4</button>
+    <button >5</button>
+    <button >6</button>
+    <button >+</button>
+    <button >7</button>
+    <button >8</button>
+    <button >9</button>
+    <button >-</button>
+    <button >.</button>
+    <button >0</button>
+    <button className="big-tile">=</button>
   </div>
   )
 }
