@@ -31,6 +31,10 @@ function reducer(state, { type, payload })
           overwrite: false
         }
       }
+       if(state.currentNumber === "SYNTAX ERROR")
+      {
+        return initialState;
+      }
       if (payload.number === "0" && state.currentNumber === "0")
       { 
         return state;
@@ -154,6 +158,25 @@ function evaluate({ currentNumber, previousNumber, calculationType})
 
 }
 
+const Formatter = new Intl.NumberFormat("en-US", {
+  maximumFractionDigits: 20, // Tillräckligt högt för att inte kapa decimaler
+});
+
+function formatNumber(number) {
+  if (number === "") return "";
+
+  if (isNaN(Number(number))) {
+    return number;
+  }
+
+  const [integer, decimal] = number.split(".");
+
+  const formattedInteger = Formatter.format(Number(integer));
+
+  return decimal != null ? `${formattedInteger}.${decimal}` : formattedInteger;
+}
+
+
 
 function App() 
 {
@@ -161,8 +184,8 @@ const [{ currentNumber, previousNumber, calculationType }, dispatch] = useReduce
   return(
   <div className="calc-grid">
     <div className="output">
-      <div className="firstNumber">{previousNumber} {calculationType}</div>
-        <div className="secNumber">{currentNumber}</div>
+      <div className="firstNumber">{formatNumber(previousNumber)} {calculationType}</div>
+        <div className="secNumber">{formatNumber(currentNumber)}</div>
     </div>
     <button className="big-tile" onClick={() => dispatch({ type: ACTIONS.CLEAR})}>AC</button>
     <button className onClick={() => dispatch({ type: ACTIONS.DELETE_NUMBER})}>DEL</button>
