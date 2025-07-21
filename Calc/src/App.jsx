@@ -23,6 +23,14 @@ function reducer(state, { type, payload })
   switch (type) 
   {
     case ACTIONS.ADD_NUMBER:
+      if(state.overwrite)
+      {
+        return{
+          ...state,
+          currentNumber: payload.number,
+          overwrite: false
+        }
+      }
       if (payload.number === "0" && state.currentNumber === "0")
       { 
         return state;
@@ -66,8 +74,7 @@ function reducer(state, { type, payload })
             currentNumber: ""
           }
 
-    case ACTIONS.CLEAR:
-        return initialState;
+  
 
     case ACTIONS.EVALUATE:
       if(state.calculationType === "" || state.previousNumber === "" || state.currentNumber === "")
@@ -83,10 +90,33 @@ function reducer(state, { type, payload })
 
       return {
         ...state,
+        overwrite: true,
         previousNumber: "",
         calculationType: "",
         currentNumber: evaluate(state)
       }
+
+    case ACTIONS.DELETE_NUMBER:
+      if (state.overwrite)
+      {
+        return{
+          ...state,
+          overwrite:false,
+          currentNumber: ""
+        }
+      }
+      if(state.currentNumber === "SYNTAX ERROR")
+      {
+        return initialState;
+      }
+      
+      return {
+        ...state,
+        currentNumber: state.currentNumber.slice(0, -1)
+      }
+
+    case ACTIONS.CLEAR:
+      return initialState;
         
   }
   
@@ -135,7 +165,7 @@ const [{ currentNumber, previousNumber, calculationType }, dispatch] = useReduce
         <div className="secNumber">{currentNumber}</div>
     </div>
     <button className="big-tile" onClick={() => dispatch({ type: ACTIONS.CLEAR})}>AC</button>
-    <FunctionButtons calc="DEL" dispatch={dispatch} />
+    <button className onClick={() => dispatch({ type: ACTIONS.DELETE_NUMBER})}>DEL</button>
     <FunctionButtons calc="÷" dispatch={dispatch} />
     <NumberButtons number="1" dispatch={dispatch} />
     <NumberButtons number="2" dispatch={dispatch} />
@@ -157,3 +187,5 @@ const [{ currentNumber, previousNumber, calculationType }, dispatch] = useReduce
 }
 
 export default App
+
+// Fråga gpt om reducer. payload, state, dispatch 
