@@ -42,6 +42,13 @@ function reducer(state, { type, payload })
         {
           return state;
         }
+        if (state.currentNumber === "")
+        {
+          return {
+            ...state,
+            calculationType: payload.calc
+          }
+        }
         if (state.previousNumber === "")
         {
           return {
@@ -61,6 +68,26 @@ function reducer(state, { type, payload })
 
     case ACTIONS.CLEAR:
         return initialState;
+
+    case ACTIONS.EVALUATE:
+      if(state.calculationType === "" || state.previousNumber === "" || state.currentNumber === "")
+      {
+        return {
+        ...state,
+        previousNumber: "",
+        calculationType: "",
+        currentNumber: "SYNTAX ERROR"
+        }
+       
+      }
+
+      return {
+        ...state,
+        previousNumber: "",
+        calculationType: "",
+        currentNumber: evaluate(state)
+      }
+        
   }
   
 }
@@ -117,14 +144,14 @@ const [{ currentNumber, previousNumber, calculationType }, dispatch] = useReduce
     <NumberButtons number="4" dispatch={dispatch} />
     <NumberButtons number="5" dispatch={dispatch} />
     <NumberButtons number="6" dispatch={dispatch} />
-    <FunctionButtons calc="+" dispatch={dispatch} />
+    <FunctionButtons calc="-" dispatch={dispatch} />
     <NumberButtons number="7" dispatch={dispatch} />
     <NumberButtons number="8" dispatch={dispatch} />
     <NumberButtons number="9" dispatch={dispatch} />
-    <FunctionButtons calc="-" dispatch={dispatch} />
+    <FunctionButtons calc="+" dispatch={dispatch} />
     <NumberButtons number="." dispatch={dispatch} />
     <NumberButtons number="0" dispatch={dispatch} />
-    <button className="big-tile">=</button>
+    <button className="big-tile" onClick={() => dispatch({ type: ACTIONS.EVALUATE})}>=</button>
   </div>
   );
 }

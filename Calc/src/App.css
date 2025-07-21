@@ -6,7 +6,7 @@
 body 
 {
   margin: 0;
-  background: linear-gradient(to right, rgb(50, 50, 73), rgb(63, 63, 85)) ;
+  background: linear-gradient(to right, rgb(25, 25, 45), rgb(67, 67, 85)) ;
 }
 
 .calc-grid 
@@ -27,7 +27,7 @@ body
 .output
 {
   grid-column: span 4;
-  background-color: rgba(25, 25, 45, 0.95);
+  background-color: rgba(9, 9, 11, 0.3);
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -35,6 +35,7 @@ body
   padding: 1rem;
   word-wrap: break-word;
   word-break: break-all;
+
 }
 
 .output .firstNumber 
@@ -46,7 +47,7 @@ body
 .output .secNumber
 {
   color: rgb(255, 255, 255);
-  font-size: 3rem;
+  font-size: 2.8rem;
 }
 
 .calc-grid > button 
