@@ -9,10 +9,12 @@ export const ACTIONS =
   CHOOSE_FUNCTION: 'choose-function',
   CLEAR: 'clear',
   DELETE_NUMBER: 'delete-number',
-  EVALUATE: 'evaluate'
+  EVALUATE: 'evaluate',
+  INVERT_NUMBER: 'invert-number'
 }
 
-const initialState = {
+const initialState = 
+{
   currentNumber: "",
   previousNumber: "",
   calculationType: ""
@@ -23,6 +25,7 @@ function reducer(state, { type, payload })
   switch (type) 
   {
     case ACTIONS.ADD_NUMBER:
+    {
       if(state.overwrite)
       {
         return{
@@ -31,7 +34,7 @@ function reducer(state, { type, payload })
           overwrite: false
         }
       }
-       if(state.currentNumber === "SYNTAX ERROR")
+        if(state.currentNumber === "SYNTAX ERROR")
       {
         return initialState;
       }
@@ -39,7 +42,7 @@ function reducer(state, { type, payload })
       { 
         return state;
       }
-      if (payload.number === "." && state.currentNumber.includes( "."))
+      if (payload.number === "." && state.currentNumber.includes("."))
       { 
         return state;
       }
@@ -48,39 +51,40 @@ function reducer(state, { type, payload })
         ...state,
         currentNumber: `${state.currentNumber || ""}${payload.number}`
       };
-
+    }
     case ACTIONS.CHOOSE_FUNCTION:
-        if (state.currentNumber === "" && state.previousNumber === "" )
-        {
-          return state;
-        }
-        if (state.currentNumber === "")
-        {
-          return {
-            ...state,
-            calculationType: payload.calc
-          }
-        }
-        if (state.previousNumber === "")
-        {
-          return {
-            ...state,
-            calculationType: payload.calc,
-            previousNumber: state.currentNumber,
-            currentNumber: ""
-          }
-        }
-        //Default if more than one function buttons is used.
+    {
+      if (state.currentNumber === "" && state.previousNumber === "" )
+      {
+        return state;
+      }
+      if (state.currentNumber === "")
+      {
         return {
-            ...state,
-            previousNumber: evaluate(state),
-            calculationType: payload.calc,
-            currentNumber: ""
-          }
-
-  
+          ...state,
+          calculationType: payload.calc
+        }
+      }
+      if (state.previousNumber === "")
+      {
+        return {
+          ...state,
+          calculationType: payload.calc,
+          previousNumber: state.currentNumber,
+          currentNumber: ""
+        }
+      }
+      //If more than one function buttons is used in a row before pressing =
+      return {
+          ...state,
+          previousNumber: evaluate(state),
+          calculationType: payload.calc,
+          currentNumber: ""
+        }
+    }
 
     case ACTIONS.EVALUATE:
+    {
       if(state.calculationType === "" || state.previousNumber === "" || state.currentNumber === "")
       {
         return {
@@ -89,7 +93,7 @@ function reducer(state, { type, payload })
         calculationType: "",
         currentNumber: "SYNTAX ERROR"
         }
-       
+      
       }
 
       return {
@@ -99,11 +103,13 @@ function reducer(state, { type, payload })
         calculationType: "",
         currentNumber: evaluate(state)
       }
+    }
 
     case ACTIONS.DELETE_NUMBER:
+    {
       if (state.overwrite)
       {
-        return{
+        return {
           ...state,
           overwrite:false,
           currentNumber: ""
@@ -118,10 +124,30 @@ function reducer(state, { type, payload })
         ...state,
         currentNumber: state.currentNumber.slice(0, -1)
       }
+    }
+      
+
+    case ACTIONS.INVERT_NUMBER: 
+    {
+      const numberToInvert = Number(state.currentNumber);
+
+      //Controll that its a valid number
+      if (isNaN(numberToInvert)) 
+      {
+        return state; 
+      }
+
+      return {
+        ...state,
+        currentNumber: String(numberToInvert * -1)
+      };
+    }
 
     case ACTIONS.CLEAR:
+    {
       return initialState;
-        
+    }
+    
   }
   
 }
@@ -158,14 +184,17 @@ function evaluate({ currentNumber, previousNumber, calculationType})
 
 }
 
-const Formatter = new Intl.NumberFormat("en-US", {
-  maximumFractionDigits: 20, // Tillräckligt högt för att inte kapa decimaler
-});
+const Formatter = new Intl.NumberFormat("en-US", {maximumFractionDigits: 10});
 
-function formatNumber(number) {
-  if (number === "") return "";
+function formatNumber(number) 
+{
+  if(number === "") 
+  {
+    return "";
+  }
 
-  if (isNaN(Number(number))) {
+  if (isNaN(Number(number))) 
+  {
     return number;
   }
 
@@ -187,8 +216,9 @@ const [{ currentNumber, previousNumber, calculationType }, dispatch] = useReduce
       <div className="firstNumber">{formatNumber(previousNumber)} {calculationType}</div>
         <div className="secNumber">{formatNumber(currentNumber)}</div>
     </div>
-    <button className="big-tile" onClick={() => dispatch({ type: ACTIONS.CLEAR})}>AC</button>
-    <button className onClick={() => dispatch({ type: ACTIONS.DELETE_NUMBER})}>DEL</button>
+    <button onClick={() => dispatch({ type: ACTIONS.CLEAR})}>AC</button>
+    <button onClick={() => dispatch({ type: ACTIONS.DELETE_NUMBER})}>DEL</button>
+    <button onClick={() => dispatch({ type: ACTIONS.INVERT_NUMBER})}>+/-</button>
     <FunctionButtons calc="÷" dispatch={dispatch} />
     <NumberButtons number="1" dispatch={dispatch} />
     <NumberButtons number="2" dispatch={dispatch} />
@@ -211,4 +241,3 @@ const [{ currentNumber, previousNumber, calculationType }, dispatch] = useReduce
 
 export default App
 
-// Fråga gpt om reducer. payload, state, dispatch 
