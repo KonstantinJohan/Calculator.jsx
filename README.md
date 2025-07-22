@@ -2,7 +2,7 @@ A calculator with self-coded logic for the operations, created as an introductio
 Based on the tutorial: https://www.youtube.com/watch?v=DgRrrOt0Vr8&list=WL&index=10
 
 <p align="center">
-  <img src="assets/Screenshot 2025-07-22" width="300"/>
+  <img src="Calc/src/assets/Screenshot 2025-07-22.jpg" width="300"/>
 </p>
 
 Improvements and own functions:
