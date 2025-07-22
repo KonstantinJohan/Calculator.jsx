@@ -1,6 +1,8 @@
 A calculator with self-coded logic for the operations, created as an introduction to React and a refresh of JavaScript.
 Based on the tutorial: https://www.youtube.com/watch?v=DgRrrOt0Vr8&list=WL&index=10
 
+Screenshot:
+
 <p align="center">
   <img src="Calc/src/assets/Screenshot 2025-07-22.jpg" width="300"/>
 </p>
