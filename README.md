@@ -1,6 +1,10 @@
 A calculator with self-coded logic for the operations, created as an introduction to React and a refresh of JavaScript.
 Based on the tutorial: https://www.youtube.com/watch?v=DgRrrOt0Vr8&list=WL&index=10
 
+<p align="center">
+  <img src="assets/screenshot.png" width="300"/>
+</p>
+
 Improvements and own functions:
 - Added SYNTAX ERROR.
 - Button for inverting the current number to positive or negative (+/-), which in turn makes it possible to do calculations with two negative numbers.
