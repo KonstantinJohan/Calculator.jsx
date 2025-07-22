@@ -7,6 +7,7 @@ Screenshot:
   <img src="Calc/src/assets/Screenshot 2025-07-22.jpg" width="300"/>
 </p>
 
+
 Improvements and own functions:
 - Added SYNTAX ERROR.
 - Button for inverting the current number to positive or negative (+/-), which in turn makes it possible to do calculations with two negative numbers.
@@ -15,10 +16,12 @@ Improvements and own functions:
 - Using empty strings instead of null and stricter indentation.
 - A pleasant use of colors and design.
 
+
 Stack:
 - Vite + React app
 - Run with:
   - cd calc
   - npm run dev 
+
 
 This project is currently finished, but there is great learning opportunity in building a calculator with advanced functions and an expandable grid, like the one on a phone.
