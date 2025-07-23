@@ -8,20 +8,22 @@ Screenshot:
 </p>
 
 
-Improvements and own functions:
+Improvements and new functions:
 - Added SYNTAX ERROR.
+- Modeled after the iPhone calculator, but with the single-digit delete function replacing the % function, which is more useful in my opinion.
 - Button for inverting the current number to positive or negative (+/-), which in turn makes it possible to do calculations with two negative numbers.
 - Now correctly handles decimals.
-- Modeled after the iPhone calculator, but with the single-digit delete function replacing the % function, which is more useful in my opinion.
-- Using empty strings instead of null and stricter indentation.
-- A pleasant use of colors and design.
+- Using "initialState" with empty strings instead of using null.
+- A pleasant use of colors.
+- Strict indentation.
+
 
 
 Stack:
-- Vite + React app
+- Vite + React using JavaScript
 - Run with:
   - cd calc
   - npm run dev 
 
 
-This project is currently finished, but there is great learning opportunity in building a calculator with advanced functions and an expandable grid, like the one on a phone.
+This project is currently marked as finished.
