@@ -17,7 +17,8 @@ const initialState =
 {
   currentNumber: "",
   previousNumber: "",
-  calculationType: ""
+  calculationType: "",
+  overwrite: false
 }
 
 function reducer(state, { type, payload }) 
@@ -147,6 +148,9 @@ function reducer(state, { type, payload })
     {
       return initialState;
     }
+
+  // default:
+  //   return state;
     
   }
   
@@ -177,6 +181,10 @@ function evaluate({ currentNumber, previousNumber, calculationType})
       break;
 
     case "÷":
+       if (current === 0) 
+      {
+        return "SYNTAX ERROR"; // To avoid ∞ (infinity)
+      }
       computation = prev / current
       break;
   }
@@ -240,4 +248,3 @@ const [{ currentNumber, previousNumber, calculationType }, dispatch] = useReduce
 }
 
 export default App
-
