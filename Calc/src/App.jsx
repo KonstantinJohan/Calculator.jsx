@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react'
+import { useReducer} from 'react'
 import NumberButtons from './NumberButtons'
 import FunctionButtons from './FunctionButtons'
 import './App.css'
